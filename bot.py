@@ -4,14 +4,15 @@ import time
 from telegram import Bot
 import os
 
-# Datos sensibles desde variables de entorno
+# Variables de entorno
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-# URL a monitorear
+# URL del evento
 URL = 'https://www.allaccess.com.ar/event/bad-bunny'
 CHECK_INTERVAL = 60  # segundos
 
+# Inicializar bot de Telegram
 bot = Bot(token=TELEGRAM_TOKEN)
 
 def check_tickets():
@@ -19,11 +20,20 @@ def check_tickets():
         response = requests.get(URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
-        buy_button = soup.find('a', class_='button-buy')
-        if buy_button and "entradas" in buy_button.text.lower():
-            return True
-        else:
-            return False
+
+        # Buscar en botones
+        buttons = soup.find_all('button')
+        for button in buttons:
+            if "entradas" in button.get_text().lower():
+                return True
+
+        # Buscar también en links por si acaso
+        links = soup.find_all('a')
+        for link in links:
+            if "entradas" in link.get_text().lower():
+                return True
+
+        return False
     except Exception as e:
         print(f"Error al revisar la página: {e}")
         return False
@@ -40,7 +50,7 @@ def main():
         print("🔎 Revisando disponibilidad...")
         if check_tickets():
             print("🎟️ Entradas disponibles detectadas, enviando mensaje a Telegram...")
-            send_telegram_message("¡HAY ENTRADAS PARA BAD BUNNY!")
+            send_telegram_message("¡HAY ENTRADAS PARA BAD BUNNY! 🎟️🔥")
             break
         else:
             print("❌ No hay entradas disponibles aún.")
