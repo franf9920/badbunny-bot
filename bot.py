@@ -9,8 +9,8 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 # URL del evento
-URL = 'https://www.allaccess.com.ar/event/bad-bunny'
-CHECK_INTERVAL = 60  # segundos
+URL = 'https://www.allaccess.com.ar/event/linkin-park-venta-general'
+CHECK_INTERVAL = 20  # segundos
 
 # Inicializar bot de Telegram
 bot = Bot(token=TELEGRAM_TOKEN)
