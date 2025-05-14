@@ -4,8 +4,11 @@ import time
 from telegram import Bot
 import os
 
+# Datos sensibles desde variables de entorno
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
+
+# URL a monitorear
 URL = 'https://www.allaccess.com.ar/event/badbunny'
 CHECK_INTERVAL = 60  # segundos
 
@@ -32,13 +35,15 @@ def send_telegram_message(message):
         print(f"Error enviando mensaje de Telegram: {e}")
 
 def main():
+    print("✅ BOT INICIADO CORRECTAMENTE - EMPIEZA MONITOREO")
     while True:
-        print("Revisando disponibilidad...")
+        print("🔎 Revisando disponibilidad...")
         if check_tickets():
+            print("🎟️ Entradas disponibles detectadas, enviando mensaje a Telegram...")
             send_telegram_message("¡HAY ENTRADAS PARA BAD BUNNY!")
             break
         else:
-            print("No hay entradas disponibles aún.")
+            print("❌ No hay entradas disponibles aún.")
         time.sleep(CHECK_INTERVAL)
 
 if __name__ == "__main__":
