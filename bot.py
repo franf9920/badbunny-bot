@@ -8,9 +8,9 @@ import os
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-# URL del evento
+# URL del evento (puedes cambiarla según quieras probar)
 URL = 'https://www.allaccess.com.ar/event/linkin-park-venta-general'
-CHECK_INTERVAL = 20  # segundos
+CHECK_INTERVAL = 60  # segundos
 
 # Inicializar bot de Telegram
 bot = Bot(token=TELEGRAM_TOKEN)
@@ -35,25 +35,25 @@ def check_tickets():
 
         return False
     except Exception as e:
-        print(f"Error al revisar la página: {e}")
+        print(f"❌ Error al revisar la página: {e}", flush=True)
         return False
 
 def send_telegram_message(message):
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
     except Exception as e:
-        print(f"Error enviando mensaje de Telegram: {e}")
+        print(f"❌ Error enviando mensaje de Telegram: {e}", flush=True)
 
 def main():
-    print("✅ BOT INICIADO CORRECTAMENTE - EMPIEZA MONITOREO")
+    print("✅ BOT INICIADO CORRECTAMENTE - EMPIEZA MONITOREO", flush=True)
     while True:
-        print("🔎 Revisando disponibilidad...")
+        print("🔎 Revisando disponibilidad...", flush=True)
         if check_tickets():
-            print("🎟️ Entradas disponibles detectadas, enviando mensaje a Telegram...")
+            print("🎟️ Entradas disponibles detectadas, enviando mensaje a Telegram...", flush=True)
             send_telegram_message("¡HAY ENTRADAS PARA BAD BUNNY! 🎟️🔥")
             break
         else:
-            print("❌ No hay entradas disponibles aún.")
+            print("❌ No hay entradas disponibles aún.", flush=True)
         time.sleep(CHECK_INTERVAL)
 
 if __name__ == "__main__":
