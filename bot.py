@@ -9,7 +9,7 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 # URL a monitorear
-URL = 'https://www.allaccess.com.ar/event/badbunny'
+URL = 'https://www.allaccess.com.ar/event/bad-bunny'
 CHECK_INTERVAL = 60  # segundos
 
 bot = Bot(token=TELEGRAM_TOKEN)
