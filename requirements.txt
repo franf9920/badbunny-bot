@@ -3,4 +3,3 @@ webdriver-manager
 python-telegram-bot
 beautifulsoup4
 requests
-chromium-binary
