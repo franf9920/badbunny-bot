@@ -20,7 +20,8 @@ bot = Bot(token=TELEGRAM_TOKEN)
 
 def start_browser():
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # correr sin abrir ventana
+    chrome_options.binary_location = "/usr/bin/chromium-browser"  # Ruta fija en Render
+    chrome_options.add_argument("--headless")  
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
@@ -35,7 +36,7 @@ def check_tickets(driver):
         driver.get(URL)
         time.sleep(5)  # esperar a que cargue el JavaScript
         
-        # Buscar el botón que diga "entradas"
+        # Buscar botones o links que contengan "entradas"
         buttons = driver.find_elements(By.TAG_NAME, "button")
         for button in buttons:
             if "entradas" in button.text.lower():
