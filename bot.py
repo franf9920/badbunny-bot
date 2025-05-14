@@ -3,6 +3,7 @@ import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from telegram import Bot
 
@@ -11,7 +12,7 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 # URL del evento
-URL = 'https://www.allaccess.com.ar/event/linkin-park-venta-general'
+URL = 'https://www.allaccess.com.ar/event/bad-bunny'
 CHECK_INTERVAL = 30  # segundos
 
 # Inicializar el bot de Telegram
@@ -25,7 +26,8 @@ def start_browser():
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920x1080")
     
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
 def check_tickets(driver):
